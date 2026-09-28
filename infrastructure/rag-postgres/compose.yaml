@@ -1,0 +1,24 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: learning-rag-postgres
+    restart: unless-stopped
+
+    env_file:
+      - .env
+
+    ports:
+      - "127.0.0.1:15432:5432"
+
+    volumes:
+      - rag_postgres_data:/var/lib/postgresql/data
+      - ./init:/docker-entrypoint-initdb.d:ro
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rag_app -d rag_learning"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  rag_postgres_data:

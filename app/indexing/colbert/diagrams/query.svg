@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420" role="img" aria-label="ColBERT query flow">
+<style>
+text{font-family:Arial,sans-serif;fill:#172033}
+.t{font-size:19px;font-weight:bold}
+.s{font-size:14px}
+.b{fill:#fff;stroke:#475569;stroke-width:2}
+.g{fill:#ecfdf5;stroke:#16a34a;stroke-width:2}
+.u{fill:#eff6ff;stroke:#2563eb;stroke-width:2}
+.a{stroke:#475569;stroke-width:2.5;fill:none;marker-end:url(#m)}
+</style>
+<defs>
+<marker id="m" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0 0L0 6L9 3z" fill="#475569"/>
+</marker>
+</defs>
+<rect width="1200" height="420" fill="#fff"/>
+<text x="35" y="40" class="t">Actual ColBERT query path</text>
+
+<!-- Row 1 -->
+<rect x="35" y="90" width="170" height="130" rx="12" class="b"/>
+<text x="120" y="145" text-anchor="middle" class="t">User query</text>
+<text x="120" y="173" text-anchor="middle" class="s">plain text</text>
+
+<path d="M205 155H235" class="a"/>
+
+<rect x="245" y="90" width="230" height="130" rx="12" class="u"/>
+<text x="360" y="134" text-anchor="middle" class="t">Searcher.search()</text>
+<text x="360" y="160" text-anchor="middle" class="s">query token vectors</text>
+<text x="360" y="186" text-anchor="middle" class="s">late interaction / MaxSim</text>
+
+<path d="M475 155H505" class="a"/>
+
+<rect x="515" y="90" width="230" height="130" rx="12" class="u"/>
+<text x="630" y="134" text-anchor="middle" class="t">local_chunks index</text>
+<text x="630" y="160" text-anchor="middle" class="s">candidate token matches</text>
+<text x="630" y="186" text-anchor="middle" class="s">ranked passage IDs + scores</text>
+
+<path d="M745 155H775" class="a"/>
+
+<rect x="785" y="90" width="170" height="130" rx="12" class="g"/>
+<text x="870" y="134" text-anchor="middle" class="t">JSON map</text>
+<text x="870" y="160" text-anchor="middle" class="s">passage ID →</text>
+<text x="870" y="186" text-anchor="middle" class="s">chunk ID</text>
+
+<!-- Row 1 to Row 2 -->
+<path d="M870 220V300H840" class="a"/>
+
+<!-- Row 2 -->
+<rect x="610" y="250" width="220" height="115" rx="12" class="g"/>
+<text x="720" y="288" text-anchor="middle" class="t">PostgreSQL</text>
+<text x="720" y="316" text-anchor="middle" class="s">fetch original chunks</text>
+
+<path d="M610 308H570" class="a"/>
+
+<rect x="300" y="250" width="260" height="115" rx="12" class="b"/>
+<text x="430" y="288" text-anchor="middle" class="t">Returned results</text>
+<text x="430" y="316" text-anchor="middle" class="s">original chunk + rank + score</text>
+
+<text x="35" y="395" class="s">MaxSim ranks passages in ColBERT; PostgreSQL restores the original chunks after passage IDs are mapped.</text>
+</svg>

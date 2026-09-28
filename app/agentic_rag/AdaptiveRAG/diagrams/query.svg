@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="780" viewBox="0 0 1800 780" role="img" aria-label="Complete Adaptive RAG LangGraph flow">
+  <style>
+    text { font-family: Arial, sans-serif; fill: #172033; }
+    .title { font-size: 26px; font-weight: 700; }
+    .subtitle { font-size: 15px; fill: #42526a; }
+    .label { font-size: 16px; font-weight: 700; }
+    .small { font-size: 13px; fill: #42526a; }
+    .node { stroke: #355070; stroke-width: 2; }
+    .decision { fill: #fff4cc; stroke: #b7791f; stroke-width: 2; }
+    .terminal { fill: #eaf8f0; stroke: #287a4e; stroke-width: 2; }
+    .failure { fill: #fff0ed; stroke: #b9503c; stroke-width: 2; }
+    .arrow { stroke: #355070; stroke-width: 2.2; fill: none; marker-end: url(#arrow); }
+    .dashed { stroke-dasharray: 6 5; }
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#355070"/>
+    </marker>
+  </defs>
+  <rect width="1800" height="780" fill="#ffffff"/>
+  <text x="900" y="42" text-anchor="middle" class="title">Adaptive RAG: complete LangGraph decision flow</text>
+  <text x="900" y="68" text-anchor="middle" class="subtitle">Local retrieval and web results use the same document → generate → evaluate path.</text>
+
+  <!-- Entry and routing -->
+  <rect x="30" y="335" width="140" height="72" rx="12" class="node" fill="#e7f0ff"/>
+  <text x="100" y="365" text-anchor="middle" class="label">START</text>
+  <text x="100" y="387" text-anchor="middle" class="small">user question</text>
+  <path d="M170 371H215" class="arrow"/>
+  <polygon points="325,315 435,371 325,427 215,371" class="decision"/>
+  <text x="325" y="366" text-anchor="middle" class="label">Route question</text>
+  <text x="325" y="387" text-anchor="middle" class="small">Cohere route label</text>
+
+  <!-- Local corpus branch -->
+  <path d="M325 315V136H470" class="arrow"/>
+  <text x="337" y="230" class="small">database-search</text>
+  <rect x="470" y="100" width="180" height="72" rx="12" class="node" fill="#eaf8f0"/>
+  <text x="560" y="130" text-anchor="middle" class="label">Retrieve</text>
+  <text x="560" y="152" text-anchor="middle" class="small">local pgvector chunks</text>
+  <path d="M650 136H720" class="arrow"/>
+  <rect x="720" y="100" width="180" height="72" rx="12" class="node" fill="#f3edff"/>
+  <text x="810" y="130" text-anchor="middle" class="label">Grade documents</text>
+  <text x="810" y="152" text-anchor="middle" class="small">filter relevant chunks</text>
+  <path d="M900 136H935" class="arrow"/>
+  <polygon points="1030,82 1125,136 1030,190 935,136" class="decision"/>
+  <text x="1030" y="130" text-anchor="middle" class="label">Relevant</text>
+  <text x="1030" y="151" text-anchor="middle" class="label">evidence?</text>
+
+  <!-- Web search branch -->
+  <path d="M435 371H720" class="arrow"/>
+  <text x="530" y="361" class="small">web-search</text>
+  <rect x="720" y="315" width="180" height="72" rx="12" class="node" fill="#e7f0ff"/>
+  <text x="810" y="345" text-anchor="middle" class="label">Web search</text>
+  <text x="810" y="367" text-anchor="middle" class="small">Tavily → documents</text>
+
+  <!-- Relevant evidence outcomes -->
+  <path d="M1125 136H1200V315" class="arrow"/>
+  <text x="1140" y="126" class="small">yes</text>
+  <path d="M1030 190V255H810V315" class="arrow"/>
+  <text x="1042" y="226" class="small">no relevant evidence</text>
+
+  <!-- Fallback branch -->
+  <path d="M325 427V556H430" class="arrow"/>
+  <text x="337" y="490" class="small">unsupported route</text>
+  <rect x="430" y="520" width="200" height="72" rx="12" class="failure"/>
+  <text x="530" y="550" text-anchor="middle" class="label">Safe fallback</text>
+  <text x="530" y="572" text-anchor="middle" class="small">unsupported route</text>
+  <path d="M530 592V650" class="arrow"/>
+  <rect x="430" y="650" width="200" height="72" rx="12" class="failure"/>
+  <text x="530" y="680" text-anchor="middle" class="label">No reliable source</text>
+  <text x="530" y="702" text-anchor="middle" class="small">terminal response</text>
+
+  <!-- Shared generation and evaluation -->
+  <path d="M900 351H1110" class="arrow"/>
+  <rect x="1110" y="315" width="180" height="72" rx="12" class="node" fill="#e7f0ff"/>
+  <text x="1200" y="345" text-anchor="middle" class="label">Generate</text>
+  <text x="1200" y="367" text-anchor="middle" class="small">answer from documents</text>
+  <path d="M1290 351H1325" class="arrow"/>
+  <polygon points="1420,295 1515,351 1420,407 1325,351" class="decision"/>
+  <text x="1420" y="345" text-anchor="middle" class="label">Grounded in</text>
+  <text x="1420" y="366" text-anchor="middle" class="label">evidence?</text>
+
+  <path d="M1420 295V206H1555" class="arrow"/>
+  <text x="1432" y="255" class="small">yes</text>
+  <polygon points="1650,150 1745,206 1650,262 1555,206" class="decision"/>
+  <text x="1650" y="200" text-anchor="middle" class="label">Answers the</text>
+  <text x="1650" y="221" text-anchor="middle" class="label">question?</text>
+
+  <path d="M1650 150V113" class="arrow"/>
+  <text x="1660" y="137" class="small">yes</text>
+  <rect x="1585" y="55" width="130" height="58" rx="12" class="terminal"/>
+  <text x="1650" y="89" text-anchor="middle" class="label">END: answer</text>
+
+  <!-- Bounded failure paths -->
+  <path d="M1420 407V510" class="arrow"/>
+  <text x="1432" y="463" class="small">no</text>
+  <polygon points="1420,510 1510,560 1420,610 1330,560" class="decision"/>
+  <text x="1420" y="565" text-anchor="middle" class="label">Retries left?</text>
+
+  <path d="M1330 560H1200V387" class="arrow"/>
+  <text x="1140" y="584" class="small">yes: regenerate same evidence</text>
+
+  <path d="M1510 560H1565" class="arrow"/>
+  <text x="1528" y="550" class="small">no</text>
+  <rect x="1565" y="531" width="170" height="58" rx="12" class="failure"/>
+  <text x="1650" y="555" text-anchor="middle" class="label">END</text>
+  <text x="1650" y="575" text-anchor="middle" class="small">no verified answer</text>
+
+  <path d="M1650 262V531" class="arrow dashed"/>
+  <text x="1638" y="440" text-anchor="end" class="small">web retry limit reached</text>
+
+  <path d="M1745 206H1780V720H810V387" class="arrow"/>
+  <text x="1000" y="712" class="small">no: retry through web search</text>
+</svg>

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="500" viewBox="0 0 1200 500" role="img" aria-label="Multi-vector query flow">
+<style>
+text{font-family:Arial,sans-serif;fill:#172033}
+.t{font-size:19px;font-weight:bold}
+.s{font-size:14px}
+.b{fill:#fff;stroke:#475569;stroke-width:2}
+.g{fill:#ecfdf5;stroke:#16a34a;stroke-width:2}
+.p{fill:#faf5ff;stroke:#9333ea;stroke-width:2}
+.u{fill:#eff6ff;stroke:#2563eb;stroke-width:2}
+.a{stroke:#475569;stroke-width:2.5;fill:none;marker-end:url(#m)}
+</style>
+<defs>
+<marker id="m" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0 0L0 6L9 3z" fill="#475569"/>
+</marker>
+</defs>
+<rect width="1200" height="500" fill="#fff"/>
+<text x="35" y="38" class="t">Actual multi-vector query path</text>
+
+<!-- Row 1 -->
+<rect x="35" y="75" width="160" height="150" rx="12" class="b"/>
+<text x="115" y="140" text-anchor="middle" class="t">User query</text>
+<text x="115" y="166" text-anchor="middle" class="s">plain text</text>
+
+<path d="M195 150H225" class="a"/>
+
+<rect x="225" y="75" width="175" height="150" rx="12" class="u"/>
+<text x="312.5" y="140" text-anchor="middle" class="t">Embed query</text>
+<text x="312.5" y="166" text-anchor="middle" class="s">one vector</text>
+
+<path d="M400 150H430" class="a"/>
+
+<rect x="430" y="75" width="280" height="150" rx="12" class="g"/>
+<text x="570" y="124" text-anchor="middle" class="t">All representations</text>
+<text x="570" y="150" text-anchor="middle" class="s">HNSW cosine search</text>
+<text x="570" y="176" text-anchor="middle" class="s">4 reps per chunk</text>
+
+<path d="M710 150H740" class="a"/>
+
+<rect x="740" y="75" width="220" height="150" rx="12" class="p"/>
+<text x="850" y="114" text-anchor="middle" class="t">SQL CTE #1</text>
+<text x="850" y="138" text-anchor="middle" class="s">DISTINCT ON chunk_id</text>
+<text x="850" y="162" text-anchor="middle" class="s">keep closest</text>
+<text x="850" y="186" text-anchor="middle" class="s">representation</text>
+
+<!-- Row 1 to Row 2 -->
+<path d="M850 225V320H710" class="a"/>
+
+<!-- Row 2 -->
+<rect x="450" y="300" width="250" height="140" rx="12" class="p"/>
+<text x="575" y="344" text-anchor="middle" class="t">SQL CTE #2</text>
+<text x="575" y="370" text-anchor="middle" class="s">DISTINCT ON document_id</text>
+<text x="575" y="396" text-anchor="middle" class="s">keep closest chunk</text>
+
+<path d="M450 370H390" class="a"/>
+
+<rect x="150" y="300" width="230" height="140" rx="12" class="b"/>
+<text x="265" y="344" text-anchor="middle" class="t">Returned context</text>
+<text x="265" y="370" text-anchor="middle" class="s">full doc if short</text>
+<text x="265" y="396" text-anchor="middle" class="s">else original chunk</text>
+
+<text x="35" y="475" class="s">The query visits representation vectors, then removes duplicate chunk and document results in two SQL stages.</text>
+</svg>

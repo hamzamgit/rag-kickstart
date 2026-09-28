@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420" role="img" aria-label="RAPTOR query flow">
+  <style>
+    text{font-family:Arial,sans-serif;fill:#172033}
+    .t{font-size:19px;font-weight:bold}
+    .s{font-size:14px}
+    .box{fill:#fff;stroke:#475569;stroke-width:2}
+    .green{fill:#ecfdf5;stroke:#16a34a;stroke-width:2}
+    .blue{fill:#eff6ff;stroke:#2563eb;stroke-width:2}
+    .arrow{stroke:#475569;stroke-width:2.5;fill:none;marker-end:url(#a)}
+  </style>
+  <defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#475569"/></marker></defs>
+  <rect width="1200" height="420" fill="#ffffff"/>
+  <text x="35" y="38" class="t">Actual RAPTOR query path — flat search, not tree traversal</text>
+
+  <rect x="35" y="105" width="150" height="92" rx="12" class="box"/>
+  <text x="72" y="145" class="t">User query</text>
+  <text x="55" y="171" class="s">plain text</text>
+
+  <path d="M185 151H265" class="arrow"/>
+
+  <rect x="280" y="95" width="175" height="112" rx="12" class="blue"/>
+  <text x="316" y="133" class="t">Embed query</text>
+  <text x="306" y="160" class="s">384-dimension vector</text>
+
+  <path d="M455 151H535" class="arrow"/>
+
+  <rect x="550" y="66" width="315" height="170" rx="12" class="green"/>
+  <text x="579" y="104" class="t">raptor_nodes HNSW index</text>
+  <text x="600" y="132" class="s">leaf, summary, and root vectors</text>
+  <text x="600" y="156" class="s">all levels searched together</text>
+  <text x="600" y="180" class="s">using cosine distance</text>
+
+  <path d="M865 151H945" class="arrow"/>
+
+  <rect x="960" y="95" width="195" height="112" rx="12" class="box"/>
+  <text x="993" y="130" class="t">Top-k nodes</text>
+  <text x="993" y="157" class="s">may mix leaf /</text>
+  <text x="993" y="180" class="s">summary / root</text>
+
+  <text x="35" y="280" class="t">What is visited?</text>
+  <text x="35" y="310" class="s">The query does not choose one branch, so no tree branch is explicitly pruned. HNSW approximates nearest neighbors inside the flat node collection.</text>
+  <text x="35" y="352" class="s">The answer layer receives the returned node text, labelled with its level and node_type.</text>
+</svg>

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" role="img" aria-label="RAPTOR recursive indexing flow">
+<style>
+text{font-family:Arial,sans-serif;fill:#172033}
+.t{font-size:19px;font-weight:bold}
+.s{font-size:14px}
+.b{fill:#fff;stroke:#475569;stroke-width:2}
+.g{fill:#ecfdf5;stroke:#16a34a;stroke-width:2}
+.p{fill:#faf5ff;stroke:#9333ea;stroke-width:2}
+.u{fill:#eff6ff;stroke:#2563eb;stroke-width:2}
+.a{stroke:#475569;stroke-width:2.5;fill:none;marker-end:url(#m)}
+</style>
+<defs><marker id="m" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L0 6L9 3z" fill="#475569"/></marker></defs>
+<rect width="1200" height="560" fill="#fff"/>
+<text x="35" y="38" class="t">Actual RAPTOR build path for one document</text>
+
+<rect x="35" y="105" width="180" height="100" rx="12" class="b"/><text x="68" y="143" class="t">Source chunks</text><text x="58" y="170" class="s">existing embeddings</text>
+<path d="M215 155H255" class="a"/>
+
+<rect x="270" y="95" width="185" height="120" rx="12" class="u"/><text x="302" y="133" class="t">Level 0 leaves</text><text x="303" y="160" class="s">copy chunks into</text><text x="300" y="185" class="s">raptor_nodes table</text>
+<path d="M455 155H510" class="a"/>
+
+<rect x="525" y="90" width="185" height="130" rx="12" class="p"/><text x="558" y="128" class="t">GMM clustering</text><text x="550" y="155" class="s">try configured counts</text><text x="553" y="180" class="s">choose lowest BIC</text>
+<path d="M710 155H770" class="a"/>
+
+<rect x="785" y="90" width="185" height="130" rx="12" class="g"/><text x="832" y="128" class="t">LLM summary</text><text x="816" y="155" class="s">one per GMM group</text><text x="812" y="180" class="s">then embed summary</text>
+<path d="M970 155H1015" class="a"/>
+
+<rect x="1030" y="95" width="145" height="120" rx="12" class="u"/><text x="1058" y="133" class="t">Next level</text><text x="1048" y="160" class="s">summary nodes</text><text x="1050" y="185" class="s">parent links set</text>
+<path d="M1105 215V245" class="a"/>
+
+<polygon points="1105,250 1170,300 1105,350 1040,300" class="p"/><text x="1062" y="294" class="s">one node</text><text x="1078" y="316" class="s">left?</text>
+
+<path d="M1040 300C970 300 620 300 620 235" class="a"/><text x="770" y="285" class="s">no: cluster the new summary level again</text>
+
+<path d="M1105 350V420H795" class="a"/><text x="870" y="402" class="s">yes: this summary is the root</text>
+
+<rect x="535" y="365" width="270" height="115" rx="12" class="g"/><text x="579" y="403" class="t">Final root node</text><text x="575" y="429" class="s">all remaining nodes</text><text x="560" y="453" class="s">summarized at stop / max level</text>
+
+<text x="35" y="530" class="s">All leaves, summaries, and the root are stored with vectors; parent_node_id preserves the tree.</text>
+</svg>

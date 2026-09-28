@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-label="Corrective RAG query flow">
+  <style>
+    text { font-family: Arial, sans-serif; fill: #172033; }
+    .title { font-size: 24px; font-weight: 700; }
+    .label { font-size: 16px; font-weight: 700; }
+    .small { font-size: 14px; fill: #42526a; }
+    .node { stroke: #355070; stroke-width: 2; }
+    .decision { fill: #fff4cc; stroke: #b7791f; stroke-width: 2; }
+    .arrow { stroke: #355070; stroke-width: 2.2; fill: none; marker-end: url(#arrow); }
+    .line { stroke: #355070; stroke-width: 2.2; fill: none; }
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#355070"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="520" fill="#ffffff"/>
+  <text x="600" y="45" text-anchor="middle" class="title">Corrective RAG (CRAG): query flow</text>
+
+  <rect x="50" y="210" width="145" height="70" rx="12" class="node" fill="#e7f0ff"/>
+  <text x="122" y="239" text-anchor="middle" class="label">User question</text>
+  <text x="122" y="260" text-anchor="middle" class="small">original intent</text>
+
+  <rect x="260" y="210" width="165" height="70" rx="12" class="node" fill="#eaf8f0"/>
+  <text x="342" y="239" text-anchor="middle" class="label">Retrieve chunks</text>
+  <text x="342" y="260" text-anchor="middle" class="small">PostgreSQL + pgvector</text>
+
+  <rect x="490" y="210" width="180" height="70" rx="12" class="node" fill="#f3edff"/>
+  <text x="580" y="239" text-anchor="middle" class="label">Grade each source</text>
+  <text x="580" y="260" text-anchor="middle" class="small">relevant / irrelevant</text>
+
+  <polygon points="800,190 890,245 800,300 710,245" class="decision"/>
+  <text x="800" y="239" text-anchor="middle" class="label">Relevant</text>
+  <text x="800" y="260" text-anchor="middle" class="label">evidence?</text>
+
+  <rect x="950" y="115" width="190" height="70" rx="12" class="node" fill="#eaf8f0"/>
+  <text x="1045" y="144" text-anchor="middle" class="label">Generate answer</text>
+  <text x="1045" y="165" text-anchor="middle" class="small">filtered evidence only</text>
+
+  <rect x="950" y="350" width="190" height="70" rx="12" class="node" fill="#fff0ed"/>
+  <text x="1045" y="379" text-anchor="middle" class="label">No local evidence</text>
+  <text x="1045" y="400" text-anchor="middle" class="small">after retry budget</text>
+
+  <rect x="490" y="375" width="180" height="70" rx="12" class="node" fill="#e7f0ff"/>
+  <text x="580" y="404" text-anchor="middle" class="label">Rewrite query</text>
+  <text x="580" y="425" text-anchor="middle" class="small">bounded correction</text>
+
+  <path d="M195 245H260" class="arrow"/>
+  <path d="M425 245H490" class="arrow"/>
+  <path d="M670 245H710" class="arrow"/>
+
+  <path d="M890 245H920V150H950" class="arrow"/>
+  <text x="928" y="215" class="small">yes</text>
+
+  <path d="M800 300V325" class="line"/>
+  <text x="810" y="318" class="small">no</text>
+
+  <path d="M800 325H580V375" class="arrow"/>
+  <text x="640" y="318" class="small">retry left</text>
+
+  <path d="M800 325H1045V350" class="arrow"/>
+  <text x="900" y="318" class="small">no retry</text>
+
+  <path d="M490 410H342V280" class="arrow"/>
+  <text x="352" y="367" class="small">re-retrieve</text>
+</svg>

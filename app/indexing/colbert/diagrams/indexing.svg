@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="510" viewBox="0 0 1200 510" role="img" aria-label="ColBERT indexing flow">
+  <style>
+    text{font-family:Arial,sans-serif;fill:#172033}
+    .t{font-size:19px;font-weight:bold}
+    .s{font-size:14px}
+    .box{fill:#fff;stroke:#475569;stroke-width:2}
+    .green{fill:#ecfdf5;stroke:#16a34a;stroke-width:2}
+    .blue{fill:#eff6ff;stroke:#2563eb;stroke-width:2}
+    .purple{fill:#faf5ff;stroke:#9333ea;stroke-width:2}
+    .arrow{stroke:#475569;stroke-width:2.5;fill:none;marker-end:url(#a)}
+  </style>
+  <defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#475569"/></marker></defs>
+  <rect width="1200" height="510" fill="#ffffff"/>
+  <text x="35" y="40" class="t">Actual ColBERT build path</text>
+
+  <rect x="35" y="85" width="190" height="110" rx="12" class="box"/>
+  <text x="70" y="122" class="t">PostgreSQL</text>
+  <text x="62" y="150" class="s">document_chunks</text>
+  <text x="55" y="174" class="s">id + content</text>
+
+  <path d="M225 140H315" class="arrow"/><text x="230" y="105" class="s">export chunks</text>
+
+  <rect x="330" y="70" width="225" height="110" rx="12" class="green"/>
+  <text x="365" y="108" class="t">local_chunks.tsv</text>
+  <text x="352" y="136" class="s">passage ID and chunk text</text>
+  <text x="352" y="160" class="s">ID equals line number</text>
+
+  <rect x="330" y="255" width="260" height="100" rx="12" class="green"/>
+  <text x="355" y="292" class="t">local_chunks_ids.json</text>
+  <text x="352" y="320" class="s">passage ID → database ID</text>
+
+  <path d="M225 155C270 155 280 305 315 305" class="arrow"/>
+
+  <path d="M555 125H655" class="arrow"/><text x="575" y="105" class="s">build index</text>
+
+  <rect x="670" y="70" width="205" height="110" rx="12" class="purple"/>
+  <text x="714" y="108" class="t">ColBERTv2</text>
+  <text x="695" y="136" class="s">tokenizes every passage</text>
+  <text x="695" y="160" class="s">encodes token vectors</text>
+
+  <path d="M875 125H965" class="arrow"/><text x="900" y="105" class="s">2-bit</text>
+
+  <rect x="980" y="70" width="180" height="110" rx="12" class="blue"/>
+  <text x="1012" y="108" class="t">local_chunks</text>
+  <text x="1002" y="136" class="s">on-disk token index</text>
+  <text x="1002" y="160" class="s">codes, IVF, metadata</text>
+
+  <path d="M590 305H755" class="arrow"/><text x="605" y="285" class="s">used at query time</text>
+
+  <rect x="770" y="245" width="350" height="125" rx="12" class="green"/>
+  <text x="835" y="283" class="t">Query-time restoration</text>
+  <text x="792" y="310" class="s">passage ID → chunk ID</text>
+  <text x="792" y="334" class="s">fetch original chunk from PostgreSQL</text>
+  <text x="792" y="358" class="s">ColBERTRetriever.invoke()</text>
+
+  <text x="35" y="440" class="s">The code does not store one embedding per chunk. The official Indexer creates a compressed, token-level ColBERT index from the TSV collection.</text>
+</svg>

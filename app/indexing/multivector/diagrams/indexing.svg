@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="500" viewBox="0 0 1200 500" role="img" aria-label="Multi-vector indexing flow">
+<style>
+text{font-family:Arial,sans-serif;fill:#172033}
+.t{font-size:19px;font-weight:bold}
+.s{font-size:14px}
+.b{fill:#fff;stroke:#475569;stroke-width:2}
+.g{fill:#ecfdf5;stroke:#16a34a;stroke-width:2}
+.p{fill:#faf5ff;stroke:#9333ea;stroke-width:2}
+.u{fill:#eff6ff;stroke:#2563eb;stroke-width:2}
+.a{stroke:#475569;stroke-width:2.5;fill:none;marker-end:url(#m)}
+</style>
+<defs>
+<marker id="m" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0 0L0 6L9 3z" fill="#475569"/>
+</marker>
+</defs>
+<rect width="1200" height="500" fill="#fff"/>
+<text x="35" y="38" class="t">Actual multi-vector build path for each unindexed chunk</text>
+
+<!-- Row 1 -->
+<rect x="35" y="110" width="210" height="120" rx="12" class="b"/>
+<text x="140" y="144" text-anchor="middle" class="t">Raw chunk</text>
+<text x="140" y="170" text-anchor="middle" class="s">document_chunks row</text>
+<text x="140" y="196" text-anchor="middle" class="s">original text</text>
+
+<path d="M245 170H275" class="a"/>
+
+<rect x="285" y="95" width="285" height="150" rx="12" class="p"/>
+<text x="427.5" y="129" text-anchor="middle" class="t">LLM prompt</text>
+<text x="427.5" y="155" text-anchor="middle" class="s">create_representations()</text>
+<text x="427.5" y="181" text-anchor="middle" class="s">validate fixed output format</text>
+<text x="427.5" y="207" text-anchor="middle" class="s">retry only on Groq 413</text>
+
+<path d="M570 170H600" class="a"/>
+
+<rect x="610" y="83" width="285" height="175" rx="12" class="g"/>
+<text x="752.5" y="117" text-anchor="middle" class="t">8 text representations</text>
+<text x="752.5" y="143" text-anchor="middle" class="s">1 original • 1 summary</text>
+<text x="752.5" y="169" text-anchor="middle" class="s">1 key-concepts • 5 questions</text>
+<text x="752.5" y="195" text-anchor="middle" class="s">all retain the same chunk_id</text>
+<text x="752.5" y="221" text-anchor="middle" class="s">representation type + index</text>
+
+<path d="M895 170H925" class="a"/>
+
+<rect x="935" y="110" width="235" height="120" rx="12" class="u"/>
+<text x="1052.5" y="144" text-anchor="middle" class="t">Embed all 8</text>
+<text x="1052.5" y="170" text-anchor="middle" class="s">embed_documents(texts)</text>
+<text x="1052.5" y="196" text-anchor="middle" class="s">384-dimension vectors</text>
+
+<!-- Row 1 to Row 2 -->
+<path d="M1052.5 230V382.5H935" class="a"/>
+
+<!-- Row 2 -->
+<rect x="610" y="320" width="315" height="125" rx="12" class="u"/>
+<text x="767.5" y="354" text-anchor="middle" class="t">chunk_multi_vectors</text>
+<text x="767.5" y="380" text-anchor="middle" class="s">delete old rows for chunk first</text>
+<text x="767.5" y="406" text-anchor="middle" class="s">insert 8 rows; HNSW cosine index</text>
+
+<text x="35" y="475" class="s">No rows are written until all eight generated representations pass parsing and have embeddings.</text>
+</svg>
